@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     @Override
     public void onClick(View v) {
-        // Build test data.
+        // Build test data. 跳转支持的参数类型: 基本类型, 自定义class对象, 序列化对象, List与Map都行,其实就是intent.putxx支持的类型
         TestSerializable testSerializable = new TestSerializable("Titanic", 555);
         TestParcelable testParcelable = new TestParcelable("jack", 666);
         TestObj testObj = new TestObj("Rose", 777);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //         .withString("key1", "value1")
                 //         .navigation();
 
-                Uri testUriMix = Uri.parse("arouter://m.aliyun.com/test/activity2");
+                Uri testUriMix = Uri.parse("arouter://m.aliyun.com/test/activity2"); // 外部app跳转测试
                 ARouter.getInstance().build(testUriMix)
                         .withString("key1", "value1")
                         .navigation();

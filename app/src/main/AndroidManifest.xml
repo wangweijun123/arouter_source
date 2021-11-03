@@ -11,6 +11,7 @@
 
             <!-- Scheme -->
             <intent-filter>
+                <!-- 网页可以使用这个来打开activity  arouter://m.aliyun.com/test/activity1?name=alex&age=18  -->
                 <data
                     android:host="m.aliyun.com"
                     android:scheme="arouter"/>
@@ -27,7 +28,7 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-
+                <!-- 网页可以使用这个来打开activity  http://m.aliyun.com/test/activity1?name=alex&age=18  -->
                 <data
                     android:host="m.aliyun.com"
                     android:scheme="http"/>
