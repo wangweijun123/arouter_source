@@ -50,12 +50,12 @@ import static com.alibaba.android.arouter.utils.Consts.TAG;
  * @version 1.0
  * @since 16/8/23 15:02
  */
-public class LogisticsCenter {
+public class LogisticsCenter {// 物流中心
     private static Context mContext;
     static ThreadPoolExecutor executor;
     private static boolean registerByPlugin;
 
-    /**
+    /**注册所有的路由,但是java代码是没有的哦, 他修改了字节码,字节码已经被修改,会自动调用register(xxxxx) 并且4次参数 com.alibaba.android.arouter.routes.ARouter$$Root$$modulejava
      * arouter-auto-register plugin will generate code inside this method
      * call this method to register all Routers, Interceptors and Providers
      */
@@ -223,7 +223,7 @@ public class LogisticsCenter {
             throw new NoRouteFoundException(TAG + "No postcard!");
         }
 
-        RouteMeta routeMeta = Warehouse.routes.get(postcard.getPath());
+        RouteMeta routeMeta = Warehouse.routes.get(postcard.getPath());// 从routes查找
         if (null == routeMeta) {
             // Maybe its does't exist, or didn't load.
             if (!Warehouse.groupsIndex.containsKey(postcard.getGroup())) {

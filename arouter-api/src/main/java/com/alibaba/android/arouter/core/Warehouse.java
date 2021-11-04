@@ -20,7 +20,7 @@ import java.util.Map;
  */
 class Warehouse {
     // Cache route and metas
-    static Map<String, Class<? extends IRouteGroup>> groupsIndex = new HashMap<>();
+    static Map<String, Class<? extends IRouteGroup>> groupsIndex = new HashMap<>();//他的值现在又4个，比如 test -> {Class@16178} "class com.alibaba.android.arouter.routes.ARouter$$Group$$test"
     static Map<String, RouteMeta> routes = new HashMap<>();
 
     // Cache provider

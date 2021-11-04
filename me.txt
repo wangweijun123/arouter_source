@@ -1,0 +1,34 @@
+1 组件化改造框架
+2 支持模块间的路由,通信(在没有依赖的情况下),既然没有依赖了就解耦了呗
+
+tab 这张表什么时候创建的
+
+Warehouse {
+
+// Cache route and metas
+    static Map<String, Class<? extends IRouteGroup>> groupsIndex = new HashMap<>();//他的值现在又4个，比如 test -> {Class@16178} "class com.alibaba.android.arouter.routes.ARouter$$Group$$test"
+
+    // 路劲 对应着 路由信息 path --> RouteMeta(group组, path配置的路径, destintion目标class)
+    static Map<String, RouteMeta> routes = new HashMap<>();
+
+    // Cache provider
+    static Map<Class, IProvider> providers = new HashMap<>();
+    static Map<String, RouteMeta> providersIndex = new HashMap<>();
+
+    // Cache interceptor
+    static Map<Integer, Class<? extends IInterceptor>> interceptorsIndex = new UniqueKeyTreeMap<>("More than one interceptors use same priority [%s]");
+    static List<IInterceptor> interceptors = new ArrayList<>();
+
+}
+
+RouteMeta {
+    private RouteType type;         // Type of route
+    private Element rawType;        // Raw type of
+    private Class<?> destination;   // Destination 目标class
+    private String path;            // Path of route  例 :/test/activity
+    private String group;           // test
+}
+
+public class ARouter$$Group$$test implements IRouteGroup
+
+1 问题：实现IRouteGroup的class是如何生成的,一定是注解处理RouteProcessor extends BaseProcessor
