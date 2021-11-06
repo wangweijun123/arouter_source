@@ -29,7 +29,7 @@ class Warehouse {
 
     // Cache interceptor
     static Map<Integer, Class<? extends IInterceptor>> interceptorsIndex = new UniqueKeyTreeMap<>("More than one interceptors use same priority [%s]");
-    static List<IInterceptor> interceptors = new ArrayList<>();
+    static List<IInterceptor> interceptors = new ArrayList<>(); // router.init(),初始化列表,之后的所有跳转都会经过所有的拦截器,
 
     static void clear() {
         routes.clear();
