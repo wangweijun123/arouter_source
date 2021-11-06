@@ -84,7 +84,7 @@ table 组信息加载组信息 Map<String, Class<? extends IRouteGroup>> 组名�
 实现类(apt 自动生成的)
 arouter 初始化会初始化组信息: 这里你会看到LogisticsCenter.loadRouterMap() 这个函数只是做了一个flag标识
 从java代码看,但是并没有加载路由信息, 奇怪了,看注释，arouter里面有一个插件会在这个函数里面插入一些代码,
-通过ams(编译的visitMethod的时候注入了自己码,
+通过ams(编译的visitMethod的时候注入了自己码, 然后去插件模块搜 register, apk返编译验证)
 (asm会debug,不然打log,打多了会把日志冲掉, apt也是一样的能调试),在loadRouterMap方法最后一行)自动调用
 register(className:自动生成)组信息: 其实就是往map里面填充值,
 
@@ -98,11 +98,62 @@ interceptor: 所有的跳转前都会经过所有的拦截器
 最后关于三方具体应用框架的学习, 其实也很简单
 下载源码, 调试(会debug, )与打log
 
+
+
+.method private static loadRouterMap()V
+    .registers 1
+
+    .line 63
+    const/4 v0, 0x0
+
+    sput-boolean v0, Lcom/alibaba/android/arouter/core/LogisticsCenter;->registerByPlugin:Z
+
+    .line 68
+    const-string v0, "com.alibaba.android.arouter.routes.ARouter$$Root$$modulejava"
+
+    invoke-static {v0}, Lcom/alibaba/android/arouter/core/LogisticsCenter;->register(Ljava/lang/String;)V
+
+    const-string v0, "com.alibaba.android.arouter.routes.ARouter$$Root$$modulekotlin"
+
+    invoke-static {v0}, Lcom/alibaba/android/arouter/core/LogisticsCenter;->register(Ljava/lang/String;)V
+
+    const-string v0, "com.alibaba.android.arouter.routes.ARouter$$Root$$arouterapi"
+
+    invoke-static {v0}, Lcom/alibaba/android/arouter/core/LogisticsCenter;->register(Ljava/lang/String;)V
+
+    const-string v0, "com.alibaba.android.arouter.routes.ARouter$$Interceptors$$modulejava"
+
+    invoke-static {v0}, Lcom/alibaba/android/arouter/core/LogisticsCenter;->register(Ljava/lang/String;)V
+
+    const-string v0, "com.alibaba.android.arouter.routes.ARouter$$Providers$$modulejava"
+
+    invoke-static {v0}, Lcom/alibaba/android/arouter/core/LogisticsCenter;->register(Ljava/lang/String;)V
+
+    const-string v0, "com.alibaba.android.arouter.routes.ARouter$$Providers$$modulekotlin"
+
+    invoke-static {v0}, Lcom/alibaba/android/arouter/core/LogisticsCenter;->register(Ljava/lang/String;)V
+
+    const-string v0, "com.alibaba.android.arouter.routes.ARouter$$Providers$$arouterapi"
+
+    invoke-static {v0}, Lcom/alibaba/android/arouter/core/LogisticsCenter;->register(Ljava/lang/String;)V
+
+    return-void
+.end method
+
+
+test -> {Class@16178} "class com.alibaba.android.arouter.routes.ARouter$$Group$$test"
+
+
+动态加载路由:
+
+在编译期间，生成了一个IRouteGroup实现类, 多个group生成对应的多个class，这个类生成规则 ARouter$$Group$$test   ARouter$$Group$$xxxx
+
+作用是往路由表中填充信息: 也就是路劲对应着路由信息(RouteMeta),里面有 目标class， path， 类型(activity, fragment, iprovider)
+
+第一次碰到这个path对应着的组没有加载就立马加载进来, 把这个路劲下的所有全部加载
+
+
 很像binder了
-
-
-
-
 
 
 
